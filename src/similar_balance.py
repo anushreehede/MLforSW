@@ -89,10 +89,6 @@ def main():
 				writer.writerow(buggy[key])
 			for key in artifical.keys():
 				writer.writerow(artifical[key])
-			
-
-			
-
 
 if __name__ == '__main__':
 	main()
