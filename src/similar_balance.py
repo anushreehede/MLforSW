@@ -1,3 +1,5 @@
+### Creating similar instances of minority class 
+
 import xlrd
 import math
 import os
@@ -49,9 +51,9 @@ def read_file(filename):
 	return buggy, not_buggy, sheet.ncols
 
 def main():
-
-	for file in os.listdir(directory):
-		filename = os.path.join(directory, file)
+	new_dir = os.path.join(directory, 'original')
+	for file in os.listdir(new_dir):
+		filename = os.path.join(new_dir, file)
 		print('\n\t\t\t'+filename)
 		buggy, not_buggy, feature_num = read_file(filename)
 		print(str(len(buggy))+','+str(len(not_buggy))+","+str((float)(len(not_buggy))/((len(not_buggy))+len(buggy)) * 100))
@@ -78,7 +80,7 @@ def main():
 
 		print('not buggy: '+str(len(not_buggy))+' buggy: '+str(len(buggy)+len(artifical)))
 
-		new_filename = os.path.join(directory, file+'_scaled.csv')
+		new_filename = os.path.join(directory+'/scaled', file[0]+'_scaled.csv')
 
 		with open(new_filename, 'w') as f:
 			writer = csv.writer(f)
