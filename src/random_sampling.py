@@ -11,16 +11,10 @@ from imblearn.under_sampling import RandomUnderSampler
 RANDOM_STATE = 42
 
 # Datset directory
-directory = "../sigmetris/data"
+directory = "../data"
 
 # Read the dataset files and store separately based on two classes
 def read_file(filename):
-	# Give the location of the file 
-	loc = (filename) 
-	  
-	# To open Workbook 
-	wb = xlrd.open_workbook(loc) 
-	sheet = wb.sheet_by_index(0) 
 
 	# Feature value list
 	feature_values = []
@@ -28,27 +22,38 @@ def read_file(filename):
 	target_values = []
 	# Number of minority class examples
 	minor = 0
-	for i in range(sheet.nrows):
-		instance = sheet.row_values(i)
+	# Open the project dataset file
+	with open(filename) as f:
+		reader = csv.reader(f)
+		# For every instance in dataset
+		for instance in reader:	
 
-		values = instance[:-1]
-		target = instance[-1]
+			# Get all features
+			values = instance[:-1]
+			# Get target feature
+			target = instance[-1]
+			# Count minority class instance 
+			if target != 0:
+				minor += 1
 
-		if target != 0:
-			minor += 1
-
-		# Store the training example in list
-		feature_values.append(values)
-		target_values.append(target)
+			# Store the training example in list
+			feature_values.append(values)
+			target_values.append(target)
 			
 	# Return the final training set lists
 	return np.array(feature_values).astype(np.float), np.array(target_values).astype(np.float), minor	
 
 def main():
+
+	# Directory containing the original dataset
 	new_dir = os.path.join(directory, 'original')
-	for file in os.listdir(new_dir):
-		filename = os.path.join(new_dir, file)
+
+	# Iterate through each of the 7 project files
+	for k in range(1, 8):
+		filename = os.path.join(new_dir, str(k)+'_original.csv')
 		print('\n\t\t\t'+filename)
+		
+		# Read files and get the data
 		data, target, minor = read_file(filename)
 
 		# Get the new undersampled size for the majority class
@@ -68,8 +73,8 @@ def main():
 
 		print('not buggy: '+str(not_bug)+' buggy: '+str(bug))
 
-		new_filename = os.path.join(directory+'/random_sampled', file[0]+'_random.csv')
-
+		# Store the new dataset in a new file
+		new_filename = os.path.join(directory+'/random_sampled', str(k)+'_random_sampled.csv')
 		with open(new_filename, 'w') as f:
 			writer = csv.writer(f)
 

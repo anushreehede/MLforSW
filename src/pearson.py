@@ -1,10 +1,10 @@
 import math 
 import csv
 import os
+import sys
 
-results = 'sig_test_results.csv'
-directory = "../sigmetris/data/scaled"
-new_filename = "pcc_test_results.csv"
+# Dataset directory
+directory = "../data"
 
 # Returns the Pearson Correlation Coefficient 
 # for two features f1 and f2 in dataset 
@@ -23,7 +23,6 @@ def get_pearson_correlation(f1, f2, dataset):
 	pcc = num/den;
 
 	# Print and return
-	# print(pcc) 
 	return pcc	
 
 # Stores and returns the dataset with only significant features
@@ -60,6 +59,12 @@ def read_file(filename, significant):
 
 def main():
 
+	# Directory particular balanced dataset indicated by command line arg
+	data_dir = os.path.join(directory, sys.argv[1])
+
+	# File containing the results of significance test
+	results = os.path.join(data_dir, sys.argv[1]+'_sig_results.csv')
+	
 	# Open file containing the significant features of each project
 	with open(results) as f:
 		reader = csv.reader(f)
@@ -69,7 +74,7 @@ def main():
 		for line in reader:
 
 			# Create the filepath
-			filepath = os.path.join(directory, str(k)+'.xlsx_scaled.csv')
+			filepath = os.path.join(data_dir, str(k)+'_'+sys.argv[1]+'.csv')
 			print('\t\t'+filepath)
 			# filepath = "mini.csv"
 
@@ -133,6 +138,7 @@ def main():
 			print(selects)
 
 			# Store the selected features in another file
+			new_filename = os.path.join(data_dir, sys.argv[1]+'_pcc_results.csv')
 			with open(new_filename, 'a') as outfile:
 				writer = csv.writer(outfile)
 
