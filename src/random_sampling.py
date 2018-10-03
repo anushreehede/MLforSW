@@ -8,8 +8,6 @@ import numpy as np
 
 from imblearn.under_sampling import RandomUnderSampler
 
-RANDOM_STATE = 42
-
 # Datset directory
 directory = "../data"
 
@@ -33,7 +31,7 @@ def read_file(filename):
 			# Get target feature
 			target = instance[-1]
 			# Count minority class instance 
-			if target != 0:
+			if target != '0':
 				minor += 1
 
 			# Store the training example in list
@@ -62,7 +60,7 @@ def main():
 		# print ('ratio: '+str(ratio))
 
 		# Fit the training data for the undersampled size and get new resampled training set
-		rus = RandomUnderSampler(random_state=RANDOM_STATE, ratio={0: minor})
+		rus = RandomUnderSampler(random_state=None, ratio={0: minor})
 		rus.fit(data, target)
 		X_resampled, y_resampled = rus.sample(data, target)
 		print('resampled total: '+str(len(X_resampled)))
