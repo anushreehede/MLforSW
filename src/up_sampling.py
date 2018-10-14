@@ -1,4 +1,4 @@
-### Creating similar instances of minority class 
+### Creating similar instances of minority class ###
 
 import math
 import os

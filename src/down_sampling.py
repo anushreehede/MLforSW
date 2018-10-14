@@ -1,6 +1,5 @@
-### Random Undersampling 
+### Down Undersampling ###
 
-import xlrd
 import os
 import random
 import csv 

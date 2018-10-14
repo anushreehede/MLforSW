@@ -1,10 +1,10 @@
-### Random Undersampling 
+### Random Undersampling ###
 
-import xlrd
 import os
 import random
 import csv 
 import numpy as np
+from string import ascii_lowercase
 
 from imblearn.under_sampling import RandomUnderSampler
 
@@ -57,28 +57,33 @@ def main():
 		# Get the new undersampled size for the majority class
 		ratio = round((len(data)-minor)*0.1)
 		print('total: '+str(len(data))+' minor: '+str(minor))
-		# print ('ratio: '+str(ratio))
+		print ('ratio: '+str(ratio))
 
-		# Fit the training data for the undersampled size and get new resampled training set
-		rus = RandomUnderSampler(random_state=None, ratio={0: minor})
-		rus.fit(data, target)
-		X_resampled, y_resampled = rus.sample(data, target)
-		print('resampled total: '+str(len(X_resampled)))
+		### Important to finish significance test for this part! ###
+		# Repeat this 10 times, get 10 random datasets
+		for c in ascii_lowercase:
+			if c == 'k':
+				break
+			print(c)
+			# Fit the training data for the undersampled size and get new resampled training set
+			rus = RandomUnderSampler(random_state=None, ratio={0: ratio})
+			rus.fit(data, target)
+			X_resampled, y_resampled = rus.sample(data, target)
+			print('resampled total: '+str(len(X_resampled)))
 
-		# Print number of buggy and number of non buggy
-		bug = len([y for y in y_resampled if y == 1])
-		not_bug = len(y_resampled) - bug
+			# Print number of buggy and number of non buggy
+			bug = len([y for y in y_resampled if y == 1])
+			not_bug = len(y_resampled) - bug
+			print('not buggy: '+str(not_bug)+' buggy: '+str(bug))
 
-		print('not buggy: '+str(not_bug)+' buggy: '+str(bug))
+			# Store the new dataset in a new file
+			new_filename = os.path.join(directory+'/random_sampled/files', str(k)+'_random_sampled_'+c+'.csv')
+			with open(new_filename, 'w') as f:
+				writer = csv.writer(f)
 
-		# Store the new dataset in a new file
-		new_filename = os.path.join(directory+'/random_sampled', str(k)+'_random_sampled.csv')
-		with open(new_filename, 'w') as f:
-			writer = csv.writer(f)
-
-			for d, t in zip(X_resampled, y_resampled):
-				instance = np.append(d, t)
-				writer.writerow(instance)
+				for d, t in zip(X_resampled, y_resampled):
+					instance = np.append(d, t)
+					writer.writerow(instance)
 			
 if __name__ == '__main__':
 	main()

@@ -1,10 +1,22 @@
+### Performs the Pearson Correlation Coefficient test to return the set of uncorrelated features ###
+
 import math 
 import csv
 import os
 import sys
+import random
+from string import ascii_lowercase
 
 # Dataset directory
 directory = "../data"
+
+# List of sub file names
+alpha = []
+for c in ascii_lowercase:
+	if c == 'k':
+		break
+	alpha.append(c)
+
 
 # Returns the Pearson Correlation Coefficient 
 # for two features f1 and f2 in dataset 
@@ -73,8 +85,11 @@ def main():
 		# Iterate over each line corresponding to each project
 		for line in reader:
 
+			# Get any one dataset out of the 10 
+			r = random.choice(alpha)
+
 			# Create the filepath
-			filepath = os.path.join(data_dir, str(k)+'_'+sys.argv[1]+'.csv')
+			filepath = os.path.join(data_dir, 'files/'+str(k)+'_'+sys.argv[1]+'_'+r+'.csv')
 			print('\t\t'+filepath)
 			# filepath = "mini.csv"
 
