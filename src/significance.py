@@ -39,6 +39,7 @@ def main():
 
 			# Read files and get the data
 			filepath = os.path.join(data_dir, str(k)+'_'+sys.argv[1]+'.csv')
+			print(filepath)
 			aging_data = pd.read_csv(filepath, header=None)
 
 			# Separating the target attribute
@@ -75,11 +76,13 @@ def main():
 			    p.append(ranksums(feature_column_aging_value, feature_column_non_aging_value) )
 			    # print(p[i])
 		    
+			l = []
 			# Iterate through each of the features
 			for i in range(0, 82):
 
 				# If p values of feature is below threshold, include it as a significant feature
 				if (p[i][1] <= 0.05):
+					l.append(i+1)
 					if k not in results_array.keys():
 						results_array.update({k: [1]})
 					else:
@@ -89,6 +92,9 @@ def main():
 						results_array.update({k: [0]})
 					else:
 						results_array[k].append(0)
+
+			print(l)
+			print(len(l))
 
 
 		# Store the selected features in another file
@@ -115,6 +121,7 @@ def main():
 
 				# Read files and get the data
 				filepath = os.path.join(data_dir, 'files/'+str(k)+'_'+sys.argv[1]+'_'+c+'.csv')
+				print(filepath)
 				aging_data = pd.read_csv(filepath, header=None)
 
 				# Separating the target attribute
@@ -136,16 +143,16 @@ def main():
 				    confidance_interval_non_aging = mean_confidence_interval(feature_column_non_aging_value)
 				    pair = [confidance_interval_aging, confidance_interval_non_aging]
 				    
-				    # # Plot the confidence interval of the data in boxplot
-				    # fig = plt.figure()
-				    # plt.boxplot(pair)
-				    # index = str(i+1)
+				    # Plot the confidence interval of the data in boxplot
+				    fig = plt.figure()
+				    plt.boxplot(pair)
+				    index = str(i+1)
 
-				    # # Save the plots
-				    # plot_dir = data_dir+"/boxplots"+str(k)
-				    # if not os.path.exists(plot_dir):
-				    # 	os.mkdir(plot_dir)
-				    # fig.savefig(plot_dir+"/box"+index)
+				    # Save the plots
+				    plot_dir = data_dir+"/boxplots"+str(k)
+				    if not os.path.exists(plot_dir):
+				    	os.mkdir(plot_dir)
+				    fig.savefig(plot_dir+"/box"+index)
 				    
 				    # # Get the p values
 				    p.append(ranksums(feature_column_aging_value, feature_column_non_aging_value) )
@@ -166,6 +173,7 @@ def main():
 						else:
 							results_array[c].append(0)
 
+			l = []
 			results = []
 			for j in range(0, 82):
 				count = 0
@@ -174,11 +182,14 @@ def main():
 						count += 1
 				# print(count)
 				if count > 5:
+					l.append(j+1)
 					results.append(1)
 				else:
 					results.append(0)
 
 			# print(results)
+			print(l)
+			print(len(l))
 
 			# Store the selected features in another file
 			new_filename = os.path.join(data_dir, sys.argv[1]+"_sig_results.csv")

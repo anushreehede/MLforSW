@@ -85,11 +85,15 @@ def main():
 		# Iterate over each line corresponding to each project
 		for line in reader:
 
-			# Get any one dataset out of the 10 
-			r = random.choice(alpha)
-
-			# Create the filepath
-			filepath = os.path.join(data_dir, 'files/'+str(k)+'_'+sys.argv[1]+'_'+r+'.csv')
+			if sys.argv[1] == "random_sampled":
+				# Get any one dataset out of the 10 
+				r = random.choice(alpha)
+				# Create the filepath
+				filepath = os.path.join(data_dir, 'files/'+str(k)+'_'+sys.argv[1]+'_'+r+'.csv')
+			else:
+				# Create the filepath
+				filepath = os.path.join(data_dir, str(k)+'_'+sys.argv[1]+'.csv')
+			
 			print('\t\t'+filepath)
 			# filepath = "mini.csv"
 
@@ -151,6 +155,7 @@ def main():
 			selects = [i for i in flags.keys() if flags[i] == 1]
 			print('\nselected feature list: ')
 			print(selects)
+			print(len(selects))
 
 			# Store the selected features in another file
 			new_filename = os.path.join(data_dir, sys.argv[1]+'_pcc_results.csv')
