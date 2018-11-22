@@ -66,11 +66,11 @@ def main():
 			    plt.boxplot(pair)
 			    index = str(i+1)
 
-			    # Save the plots
-			    plot_dir = data_dir+"/boxplots"+str(k)
-			    if not os.path.exists(plot_dir):
-			    	os.mkdir(plot_dir)
-			    fig.savefig(plot_dir+"/box"+index)
+			    # # Save the plots
+			    # plot_dir = data_dir+"/boxplots"+str(k)
+			    # if not os.path.exists(plot_dir):
+			    # 	os.mkdir(plot_dir)
+			    # fig.savefig(plot_dir+"/box"+index)
 			    
 			    # Get the p values
 			    p.append(ranksums(feature_column_aging_value, feature_column_non_aging_value) )
@@ -98,12 +98,12 @@ def main():
 
 
 		# Store the selected features in another file
-		new_filename = os.path.join(data_dir, sys.argv[1]+"_sig_results.csv")
-		with open(new_filename, 'a') as outfile:
-			writer = csv.writer(outfile)
+		# new_filename = os.path.join(data_dir, sys.argv[1]+"_sig_results.csv")
+		# with open(new_filename, 'a') as outfile:
+		# 	writer = csv.writer(outfile)
 
-			for key in results_array.keys():
-				writer.writerow(results_array[key])
+		# 	for key in results_array.keys():
+		# 		writer.writerow(results_array[key])
 
 	# If data is randomly sampled
 	else:
