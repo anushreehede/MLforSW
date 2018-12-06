@@ -14,17 +14,18 @@ from sklearn import metrics
 ### and tests with the test data for miclassification
 def run_model(X, X_t):
 
+	print("\t\t\txxxxx QDA model or Gaussian NB xxxxx")
 	X_train = []
 	y_train = []
 	for i in range(len(X)):
-		X_train.append(X[i][:-1])
-		y_train.append(X[i][-1])
+		X_train.append(X[i][1:])
+		y_train.append(X[i][0])
 
 	X_test = []
 	y_test = []
 	for i in range(len(X_t)):
-		X_test.append(X_t[i][:-1])
-		y_test.append(X_t[i][-1])
+		X_test.append(X_t[i][1:])
+		y_test.append(X_t[i][0])
 
 	# Instantiate Naive Bayes Classifier and fit the training data to the model
 	gnb = GaussianNB()

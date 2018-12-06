@@ -7,17 +7,18 @@ from sklearn import metrics
 ### and tests with the test data for miclassification
 def run_model(X, X_t):
 
+	print("\t\t\txxxxx Decsion Tree model xxxxx")
 	X_train = []
 	y_train = []
 	for i in range(len(X)):
-		X_train.append(X[i][:-1])
-		y_train.append(X[i][-1])
+		X_train.append(X[i][1:])
+		y_train.append(X[i][0])
 
 	X_test = []
 	y_test = []
 	for i in range(len(X_t)):
-		X_test.append(X_t[i][:-1])
-		y_test.append(X_t[i][-1])
+		X_test.append(X_t[i][1:])
+		y_test.append(X_t[i][0])
 
 	# Instantiate C4.5 decision tree Classifier and fit the training data to the model
 	dt = DecisionTreeClassifier(min_samples_split=5, random_state=99)

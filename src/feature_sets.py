@@ -34,6 +34,7 @@ def write_file(new_filename, new_data):
 		for i in new_data.keys():
 			writer.writerow(new_data[i])
 
+# Program Size metrics
 def program_size(dataset):
 	# Set 1: features 1 to 49
 	set_1 = {}
@@ -52,6 +53,7 @@ def program_size(dataset):
 	# print(len(set_1))
 	return set_1
 
+# McCabe's Cyclomatic Complexity metrics
 def mccabe_complexity(dataset):
 	# Set 2: features 50 to 67
 	set_2 = {}
@@ -70,6 +72,7 @@ def mccabe_complexity(dataset):
 	# print(len(set_2))
 	return set_2
 
+# Halstead metrics
 def halstead(dataset):
 	# Set 3: features 68 to 76
 	set_3 = {}
@@ -88,6 +91,7 @@ def halstead(dataset):
 	# print(len(set_3))
 	return set_3
 
+# Aging Related metrics
 def aging_related(dataset):
 	# Set 4: features 77 to 82
 	set_4 = {}
@@ -106,6 +110,7 @@ def aging_related(dataset):
 	# print(len(set_4))
 	return set_4
 
+# Resultant metrics set after significance test
 def significant(dataset, k, results):
 
 	set_5 = {}
@@ -133,6 +138,7 @@ def significant(dataset, k, results):
 	# print(len(set_5))
 	return set_5
 
+# Resultant metrics set after PCC test
 def correlation(dataset, k, results):
 	
 	set_6 = {}
@@ -160,6 +166,7 @@ def correlation(dataset, k, results):
 	# print(len(set_6))
 	return set_6	
 
+# Transpose of the original dataset
 def invert(dataset):
 
 	set_7 = {}
